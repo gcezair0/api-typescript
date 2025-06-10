@@ -5,7 +5,6 @@ const PORT = 3000;
 
 async function startServer() {
   try {
-    await db.initializeDatabase();
     await db.testConnection();
   } catch (error) {
     console.error("Erro ao inicializar o banco de dados:", error);

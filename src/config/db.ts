@@ -4,15 +4,27 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL não está definida no arquivo .env");
+
+const db = [
+  "DB_HOST",
+  "DB_PORT",
+  "DB_USERNAME",
+  "DB_PASSWORD",
+  "DB_DATABASE"
+];
+
+for (const varDb of db) {
+  if (!process.env[varDb]) {
+    throw new Error(`${varDb} não está definida no arquivo .env`);
+  }
 }
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, 
-  },
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT || "5433"),
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 async function testConnection() {
@@ -24,22 +36,5 @@ async function testConnection() {
   }
 }
 
-export const AppDataSource = new DataSource({
-  type: "postgres",
-  url: process.env.DATABASE_URL,
-  synchronize: false,
-  logging: false,
-  entities: ["src/models/**/*.ts"],
-  migrations: ["src/migrates/*ts"],
-});
 
-async function initializeDatabase() {
-  try {
-    await AppDataSource.initialize();
-    console.log("TypeORM conectado ao banco de dados!");
-  } catch (error) {
-    console.error("Erro ao conectar o TypeORM ao banco:", error);
-  }
-}
-
-export { pool, testConnection, initializeDatabase };
+export { pool, testConnection };
