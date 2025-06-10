@@ -1,4 +1,3 @@
-import { DataSource } from "typeorm";
 import { Pool, QueryResult } from "pg";
 import * as dotenv from "dotenv";
 

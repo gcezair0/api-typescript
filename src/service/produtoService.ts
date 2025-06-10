@@ -1,5 +1,5 @@
 import { ProdutosRepository } from "../repositories/produtosRepositories";
-import { GenericRepositoryImpl } from "../utils/db-utils";
+import { GenericRepositoryImpl } from "../utils/dbUtils";
 import { Pool } from 'pg';
 
 export class ProdutoService {

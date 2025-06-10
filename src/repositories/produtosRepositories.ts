@@ -1,4 +1,4 @@
-import { GenericRepositoryImpl } from '../utils/db-utils';
+import { GenericRepositoryImpl } from '../utils/dbUtils';
 import {Pool} from 'pg'
 import {produtos} from '../models/produtos';
 
